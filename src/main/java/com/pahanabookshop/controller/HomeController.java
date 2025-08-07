@@ -2,6 +2,7 @@ package com.pahanabookshop.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class HomeController {
@@ -20,4 +21,15 @@ public class HomeController {
     public String register() {
         return "register";
     }
+
+    @GetMapping("/books")
+    public String products() {
+        return "book";
+    }
+
+    @GetMapping("/book")
+    public String product() {
+        return "view_book";
+    }
+
 }
