@@ -23,7 +23,7 @@ public class HomeController {
     }
 
     @GetMapping("/books")
-    public String products() {
+    public String books() {
         return "book";
     }
 
