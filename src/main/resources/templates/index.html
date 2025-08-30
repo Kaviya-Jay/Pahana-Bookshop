@@ -1,10 +1,168 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base::layout(~{::section})}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="ISO-8859-1">
+    <title>Insert title here</title>
 </head>
 <body>
-<h1>Index Page</h1>
+<section>
+    <!-- Start Slider  -->
+
+    <div id="carouselExample" class="carousel slide">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="img/pahana1.jpg" class="d-block w-100" alt="..."
+                     height="470px">
+            </div>
+            <div class="carousel-item">
+                <img src="img/pahana2.jpg" class="d-block w-100" alt="..."
+                     height="470px">
+            </div>
+            <div class="carousel-item">
+                <img src="img/pahana3.jpg" class="d-block w-100" alt="..."
+                     height="470px">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button"
+                data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button"
+                data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- End Slider  -->
+
+    <!--< Start Category Module -->
+    <div class="container">
+        <div class="row">
+            <p class="text-center fs-4">Category</p>
+            <div class="col-md-2">
+                <div
+                        class="card rounded-circle shadow-sm p-3 mb-5 bg-body-tertiary rounded ">
+                    <div class="card-body text-center">
+                        <img src="img/category_img/novel.jpg" width="65%" height="140px">
+                        <p>Novels</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div
+                        class="card rounded-circle shadow-sm p-3 mb-5 bg-body-tertiary rounded ">
+                    <div class="card-body text-center">
+                        <img src="img/category_img/short_story.jpg" width="65%" height="140px">
+                        <p>Short Stories</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-2">
+                <div
+                        class="card rounded-circle shadow-sm p-3 mb-5 bg-body-tertiary rounded ">
+                    <div class="card-body text-center">
+                        <img src="img/category_img/children_book.jpg" width="65%" height="140px">
+                        <p>Children</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div
+                        class="card rounded-circle shadow-sm p-3 mb-5 bg-body-tertiary rounded ">
+                    <div class="card-body text-center">
+                        <img src="img/category_img/fiction.jpg" width="65%" height="140px">
+                        <p>Fiction</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-2">
+                <div
+                        class="card rounded-circle shadow-sm p-3 mb-5 bg-body-tertiary rounded ">
+                    <div class="card-body text-center">
+                        <img src="img/category_img/education.jpg" width="65%" height="140px">
+                        <p>Educational</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div
+                        class="card rounded-circle shadow-sm p-3 mb-5 bg-body-tertiary rounded ">
+                    <div class="card-body text-center">
+                        <img src="img/category_img/magazine.jpg" width="65%"
+                             height="140px">
+                        <p>Magazines</p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- End Category Module -->
+
+
+    <!-- Start Latest Book Module -->
+
+    <div class="container-fluid bg-light p-3">
+        <div class="row">
+            <p class="text-center fs-4">Featured Books</p>
+
+            <div class="col-md-3">
+                <div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+                    <div class="card-body text-center">
+                        <img alt="" src="img/book_img/nomal.jpg" class="" width="65%"
+                             height="140px">
+                        <p class="text-center">Novels</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+                    <div class="card-body text-center">
+                        <img alt="" src="img/book_img/nomal.jpg" class="" width="65%"
+                             height="140px">
+                        <p class="text-center">Novels</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+                    <div class="card-body text-center">
+                        <img alt="" src="img/book_img/nomal.jpg" class="" width="65%"
+                             height="140px">
+                        <p class="text-center">Novels</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+                    <div class="card-body text-center">
+                        <img alt="" src="img/book_img/nomal.jpg" class="" width="65%"
+                             height="140px">
+                        <p class="text-center">Novels</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- End Latest Product Module -->
+</section>
 </body>
 </html>
