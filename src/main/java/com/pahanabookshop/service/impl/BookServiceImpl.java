@@ -18,7 +18,7 @@ import com.pahanabookshop.repository.BookRepository;
 import com.pahanabookshop.service.BookService;
 
 @Service
-public class BookServiceIMpl implements BookService {
+public class BookServiceImpl implements BookService {
 
     @Autowired
     private BookRepository bookRepository;

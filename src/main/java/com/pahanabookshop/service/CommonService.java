@@ -1,4 +1,7 @@
 package com.pahanabookshop.service;
 
-public class CommonService {
+public interface CommonService {
+
+    public void removeSessionMessage();
+
 }

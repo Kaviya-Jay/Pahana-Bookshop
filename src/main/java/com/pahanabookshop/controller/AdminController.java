@@ -44,12 +44,15 @@ public class AdminController {
     }
 
     @GetMapping("/loadAddBook")
-    public String loadAddBook() {
+    public String loadAddBook(Model m) {
+        List<Category> categories = categoryService.getAllCategory();
+        m.addAttribute("categories", categories);
         return "admin/add_book";
     }
 
     @GetMapping("/category")
-    public String category() {
+    public String category(Model m) {
+        m.addAttribute("categorys", categoryService.getAllCategory());
         return "admin/category";
     }
 
@@ -162,12 +165,12 @@ public class AdminController {
             System.out.println(path);
             Files.copy(image.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
-            session.setAttribute("succMsg", "Product Saved Success");
+            session.setAttribute("succMsg", "Book Saved Success");
         } else {
             session.setAttribute("errorMsg", "something wrong on server");
         }
 
-        return "redirect:/admin/loadAddProduct";
+        return "redirect:/admin/loadAddBook";
     }
 
     @GetMapping("/books")
@@ -180,7 +183,7 @@ public class AdminController {
     public String deleteBook(@PathVariable int id, HttpSession session) {
         Boolean deleteBook = bookService.deleteBook(id);
         if (deleteBook) {
-            session.setAttribute("succMsg", "Product delete success");
+            session.setAttribute("succMsg", "Book delete success");
         } else {
             session.setAttribute("errorMsg", "Something wrong on server");
         }
@@ -194,8 +197,8 @@ public class AdminController {
         return "admin/edit_book";
     }
 
-    @PostMapping("/updatebook")
-    public String updatebook(@ModelAttribute Book book, @RequestParam("file") MultipartFile image,
+    @PostMapping("/updateBook")
+    public String updateBook(@ModelAttribute Book book, @RequestParam("file") MultipartFile image,
                                 HttpSession session, Model m) {
 
         Book updateBook = bookService.updateBook(book, image);

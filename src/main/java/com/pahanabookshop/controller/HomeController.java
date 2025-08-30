@@ -28,7 +28,7 @@ public class HomeController {
     }
 
     @GetMapping("/book")
-    public String product() {
+    public String book() {
         return "view_book";
     }
 
