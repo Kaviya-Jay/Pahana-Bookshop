@@ -153,6 +153,9 @@ public class AdminController {
 
         book.setImage(imageName);
 
+        book.setDiscount(0);
+        book.setDiscountPrice(book.getPrice());
+
         Book saveBook = bookService.saveBook(book);
 
         if (!ObjectUtils.isEmpty(saveBook)) {
@@ -201,11 +204,15 @@ public class AdminController {
     public String updateBook(@ModelAttribute Book book, @RequestParam("file") MultipartFile image,
                                 HttpSession session, Model m) {
 
-        Book updateBook = bookService.updateBook(book, image);
-        if (!ObjectUtils.isEmpty(updateBook)) {
-            session.setAttribute("succMsg", "Book update success");
+        if (book.getDiscount() < 0 || book.getDiscount() > 100) {
+            session.setAttribute("errorMsg", "invalid Discount");
         } else {
-            session.setAttribute("errorMsg", "Something wrong on server");
+            Book updateBook = bookService.updateBook(book, image);
+            if (!ObjectUtils.isEmpty(updateBook)) {
+                session.setAttribute("succMsg", "Book update success");
+            } else {
+                session.setAttribute("errorMsg", "Something wrong on server");
+            }
         }
 
         return "redirect:/admin/editBook/" + book.getId();

@@ -63,6 +63,13 @@ public class BookServiceImpl implements BookService {
         dbBook.setPrice(book.getPrice());
         dbBook.setStock(book.getStock());
         dbBook.setImage(imageName);
+        dbBook.setIsActive(book.getIsActive());
+        dbBook.setDiscount(book.getDiscount());
+
+        // 5=100*(5/100); 100-5=95
+        Double disocunt = book.getPrice() * (book.getDiscount() / 100.0);
+        Double discountPrice = book.getPrice() - disocunt;
+        dbBook.setDiscountPrice(discountPrice);
 
         Book updateBook = bookRepository.save(dbBook);
 
@@ -86,6 +93,18 @@ public class BookServiceImpl implements BookService {
         }
 
         return null;
+    }
+
+    @Override
+    public List<Book> getAllActiveBook(String category) {
+        List<Book> books = null;
+        if (ObjectUtils.isEmpty(category)) {
+            books =bookRepository.findByIsActiveTrue();
+        }else {
+            books=bookRepository.findByCategory(category);
+        }
+
+        return books;
     }
 
 }

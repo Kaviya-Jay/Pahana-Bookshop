@@ -18,4 +18,6 @@ public interface BookService {
 
     public Book updateBook(Book book, MultipartFile file);
 
+    public List<Book> getAllActiveBook(String category);
+
 }
