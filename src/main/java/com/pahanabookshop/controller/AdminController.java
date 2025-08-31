@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.pahanabookshop.model.Category;
 import com.pahanabookshop.model.Book;
+import com.pahanabookshop.model.UserDtls;
 import com.pahanabookshop.service.CategoryService;
 import com.pahanabookshop.service.BookService;
+import com.pahanabookshop.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -35,8 +38,24 @@ public class AdminController {
 
     @Autowired
     private CategoryService categoryService;
+
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    private UserService userService;
+
+    @ModelAttribute
+    public void getUserDetails(Principal p, Model m) {
+        if (p != null) {
+            String email = p.getName();
+            UserDtls userDtls = userService.getUserByEmail(email);
+            m.addAttribute("user", userDtls);
+        }
+
+        List<Category> allActiveCategory = categoryService.getAllActiveCategory();
+        m.addAttribute("categorys", allActiveCategory);
+    }
 
     @GetMapping("/")
     public String index() {
@@ -216,6 +235,24 @@ public class AdminController {
         }
 
         return "redirect:/admin/editBook/" + book.getId();
+    }
+
+    @GetMapping("/users")
+    public String getAllUsers(Model m) {
+        List<UserDtls> users = userService.getUsers("ROLE_USER");
+        m.addAttribute("users", users);
+        return "/admin/users";
+    }
+
+    @GetMapping("/updateSts")
+    public String updateUserAccountStatus(@RequestParam Boolean status, @RequestParam Integer id, HttpSession session) {
+        Boolean f = userService.updateAccountStatus(id, status);
+        if (f) {
+            session.setAttribute("succMsg", "Account Status Updated");
+        } else {
+            session.setAttribute("errorMsg", "Something wrong on server");
+        }
+        return "redirect:/admin/users";
     }
 
 }

@@ -1,0 +1,60 @@
+package com.pahanabookshop.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+
+import com.pahanabookshop.model.Cart;
+import com.pahanabookshop.model.Book;
+import com.pahanabookshop.model.UserDtls;
+import com.pahanabookshop.repository.CartRepository;
+import com.pahanabookshop.repository.BookRepository;
+import com.pahanabookshop.repository.UserRepository;
+import com.pahanabookshop.service.CartService;
+
+@Service
+public class CartServiceImpl implements CartService {
+
+    @Autowired
+    private CartRepository cartRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private BookRepository bookRepository;
+
+    @Override
+    public Cart saveCart(Integer bookId, Integer userId) {
+
+        UserDtls userDtls = userRepository.findById(userId).get();
+        Book book = bookRepository.findById(bookId).get();
+
+        Cart cartStatus = cartRepository.findByBookIdAndUserId(bookId, userId);
+
+        Cart cart = null;
+
+        if (ObjectUtils.isEmpty(cartStatus)) {
+            cart = new Cart();
+            cart.setBook(book);
+            cart.setUser(userDtls);
+            cart.setQuantity(1);
+            cart.setTotalPrice(1 * book.getDiscountPrice());
+        } else {
+            cart = cartStatus;
+            cart.setQuantity(cart.getQuantity() + 1);
+            cart.setTotalPrice(cart.getQuantity() * cart.getBook().getDiscountPrice());
+        }
+        Cart saveCart = cartRepository.save(cart);
+
+        return saveCart;
+    }
+
+    @Override
+    public List<Cart> getCartsByUser(Integer userId) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+}
