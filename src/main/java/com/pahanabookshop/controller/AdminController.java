@@ -9,6 +9,9 @@ import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.List;
 
+import com.pahanabookshop.model.BookOrder;
+import com.pahanabookshop.service.*;
+import com.pahanabookshop.util.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
@@ -25,9 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.pahanabookshop.model.Category;
 import com.pahanabookshop.model.Book;
 import com.pahanabookshop.model.UserDtls;
-import com.pahanabookshop.service.CategoryService;
-import com.pahanabookshop.service.BookService;
-import com.pahanabookshop.service.UserService;
+import com.pahanabookshop.service.CartService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -45,12 +46,20 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CartService cartService;
+
+    @Autowired
+    private OrderService orderService;
+
     @ModelAttribute
     public void getUserDetails(Principal p, Model m) {
         if (p != null) {
             String email = p.getName();
             UserDtls userDtls = userService.getUserByEmail(email);
             m.addAttribute("user", userDtls);
+            Integer countCart = cartService.getCountCart(userDtls.getId());
+            m.addAttribute("countCart", countCart);
         }
 
         List<Category> allActiveCategory = categoryService.getAllActiveCategory();
@@ -253,6 +262,35 @@ public class AdminController {
             session.setAttribute("errorMsg", "Something wrong on server");
         }
         return "redirect:/admin/users";
+    }
+
+    @GetMapping("/orders")
+    public String getAllOrders(Model m) {
+        List<BookOrder> allOrders = orderService.getAllOrders();
+        m.addAttribute("orders", allOrders);
+        return "/admin/orders";
+    }
+
+    @PostMapping("/update-order-status")
+    public String updateOrderStatus(@RequestParam Integer id, @RequestParam Integer st, HttpSession session) {
+
+        OrderStatus[] values = OrderStatus.values();
+        String status = null;
+
+        for (OrderStatus orderSt : values) {
+            if (orderSt.getId().equals(st)) {
+                status = orderSt.getName();
+            }
+        }
+
+        Boolean updateOrder = orderService.updateOrderStatus(id, status);
+
+        if (updateOrder) {
+            session.setAttribute("succMsg", "Status Updated");
+        } else {
+            session.setAttribute("errorMsg", "status not updated");
+        }
+        return "redirect:/admin/orders";
     }
 
 }

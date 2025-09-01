@@ -25,6 +25,9 @@ public class CommonUtil {
         helper.setFrom("chasheemahasini@gmail.com", "Pahana Book Shop");
         helper.setTo(reciepentEmail);
 
+        helper.setFrom("chasheemahasini@gmail.com", "Shooping Cart");
+        helper.setTo(reciepentEmail);
+
         String content = "<p>Hello,</p>" + "<p>You have requested to reset your password.</p>"
                 + "<p>Click the link below to change your password:</p>" + "<p><a href=\"" + url
                 + "\">Change my password</a></p>";

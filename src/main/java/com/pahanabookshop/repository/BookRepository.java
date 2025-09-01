@@ -1,5 +1,6 @@
 package com.pahanabookshop.repository;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.pahanabookshop.model.Book;

@@ -11,7 +11,9 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.stream.Collector;
 
+import com.pahanabookshop.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,6 +36,7 @@ import com.pahanabookshop.service.BookService;
 import com.pahanabookshop.service.UserService;
 import com.pahanabookshop.util.CommonUtil;
 
+import io.micrometer.common.util.StringUtils;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -56,12 +59,17 @@ public class HomeController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    private CartService cartService;
+
     @ModelAttribute
     public void getUserDetails(Principal p, Model m) {
         if (p != null) {
             String email = p.getName();
             UserDtls userDtls = userService.getUserByEmail(email);
             m.addAttribute("user", userDtls);
+            Integer countCart = cartService.getCountCart(userDtls.getId());
+            m.addAttribute("countCart", countCart);
         }
 
         List<Category> allActiveCategory = categoryService.getAllActiveCategory();
