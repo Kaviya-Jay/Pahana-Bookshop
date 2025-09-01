@@ -11,25 +11,49 @@
 
         <div class="col-md-12 p-5">
             <div class="row">
+
+                <th:block th:if="${session.succMsg}">
+                    <p class="text-success alert alert-success text-center" role="alert">[[${session.succMsg}]]</p>
+                    <th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
+                </th:block>
+
+                <th:block th:if="${session.errorMsg}">
+                    <p class="text-danger text-center  alert alert-danger">[[${session.errorMsg}]]</p>
+                    <th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
+
+                </th:block>
+
                 <div class="col-md-6 text-end">
-                    <img alt="" src="/img/book_img/nomal.jpg" width="330px" height="400px">
+                    <img alt="" src="/img/book_img/nomal.jpg" width="330px"
+                         height="400px">
                 </div>
 
                 <div class="col-md-6">
 
-                    <p class="fs-3">Novel</p>
-                    <p><span class="fw-bold">Description : </span><br>Author, #2025</p>
+                    <p class="fs-3">[[${book.title}]]</p>
                     <p>
-                        <span class="fw-bold"> Book Details: </span> <br>Status :
-                        <span class="badge bg-success">Available</span> <span
-                            class="badge bg-warning">out of stock</span> <br> Category : Novel<br> Policy : 7 Days Replacement & Return
+                        <span class="fw-bold">Description : </span><br>[[${book.description}]]
+                    </p>
+                    <p>
+                        <span class="fw-bold"> Book Details: </span> <br>
+                        Status :
+                        <th:block th:if="${book.stock>0}">
+                            <span class="badge bg-success">Available</span>
+                        </th:block>
 
+                        <th:block th:unless="${book.stock>0}">
+                            <span class="badge bg-warning">out of stock</span>
+                        </th:block>
+
+
+                        <br> Category: [[${book.category}]]<br>
+                        Policy : 7 Days Replacement & Return
                     </p>
                     <p class="fs-5 fw-bold">
                         Price :&nbsp; &nbsp; &nbsp; &nbsp;<i class="fas fa-rupee-sign"></i>
-                        7000 <span
-                            class="fs-6 text-decoration-line-through text-secondary">14000</span>
-                        <span class="fs-6  text-success">50% off</span>
+                        [[${book.discountPrice}]] <span
+                            class="fs-6 text-decoration-line-through text-secondary">[[${book.price}]]</span>
+                        <span class="fs-6  text-success">[[${book.discount}]]% off</span>
                     </p>
 
                     <div class="row">
@@ -47,7 +71,25 @@
                         </div>
                     </div>
 
-                    <a href="login.jsp" class="btn btn-danger col-md-12">Add To Cart</a>
+                    <th:block th:if="${book.stock>0}">
+                        <th:block th:if="${user==null}">
+                            <a href="/signin" class="btn btn-danger col-md-12">Add To
+                                Cart</a>
+                        </th:block>
+
+                        <th:block th:unless="${user==null}">
+                            <a
+                                    th:href="@{'/user/addCart?bid='+${book.id}+'&uid='+${user.id}}"
+                                    class="btn btn-danger col-md-12">Add To Cart</a>
+                        </th:block>
+
+                    </th:block>
+
+                    <th:block th:unless="${book.stock>0}">
+                        <a href="#" class="btn text-white btn-warning col-md-12">Out
+                            of Stock</a>
+                    </th:block>
+
                 </div>
             </div>
         </div>

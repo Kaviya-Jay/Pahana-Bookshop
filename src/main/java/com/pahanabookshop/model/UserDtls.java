@@ -1,6 +1,7 @@
 package com.pahanabookshop.model;
 
-import jakarta.persistence.Column;
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,30 +16,34 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-
-public class Book {
+public class UserDtls {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    @Column(length = 500)
-    private String title;
+    private String name;
 
-    @Column(length = 5000)
-    private String description;
+    private String mobileNumber;
 
-    private String category;
+    private String email;
 
-    private Double price;
+    private String address;
 
-    private int stock;
+    private String password;
 
-    private String image;
+    private String profileImage;
 
-    private int discount;
+    private String role;
 
-    private Double discountPrice;
+    private Boolean isEnable;
 
-    private Boolean isActive;
+    private Boolean accountNonLocked;
+
+    private Integer failedAttempt;
+
+    private Date lockTime;
+
+    private String resetToken;
+
 }
